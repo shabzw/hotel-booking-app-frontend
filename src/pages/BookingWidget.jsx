@@ -21,7 +21,7 @@ const BookingWidget = ({ place }) => {
   // Display name of the user by retrieving from DB and adding in the widget
   useEffect(() => {
     if (user) {
-      setName(user.name);
+      setName(JSON.parse(user).name);
     }
   }, [user]);
 

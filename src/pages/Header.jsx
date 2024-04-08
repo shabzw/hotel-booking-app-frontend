@@ -81,7 +81,7 @@ const Header = () => {
               />
             </svg>
           </Link>
-          {!!user && <div>{user.name}</div>}
+          {!!user && <div>{JSON.parse(user).name}</div>}
         </div>
       </header>
     </div>
