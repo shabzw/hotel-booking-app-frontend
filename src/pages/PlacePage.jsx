@@ -7,6 +7,8 @@ import AddressLink from "./AddressLink";
 import { UserContext } from "../UserContext";
 
 export default function PlacePage() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [place, setPlace] = useState(null);
@@ -18,7 +20,7 @@ export default function PlacePage() {
       return;
     }
 
-    fetch(`http://localhost:4000/api/account/places/${id}`, {
+    fetch(`${API_BASE_URL}/api/account/places/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
