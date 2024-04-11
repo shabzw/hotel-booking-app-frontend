@@ -81,7 +81,7 @@ const PhotosUploader = (props) => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex items-center">
         <input
           className="m-2"
           value={photoLink}
@@ -91,7 +91,7 @@ const PhotosUploader = (props) => {
         />
         <button
           onClick={addPhotoByLink}
-          className="bg-transparent bg-gray-600 text-white rounded-xl px-4 h-10"
+          className="bg-primary text-white rounded-xl px-1 h-9 sm:px-4 sm:h-10 sm:text-lg text-sm"
         >
           Add&nbsp;Photo
         </button>
