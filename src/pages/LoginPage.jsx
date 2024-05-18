@@ -1,15 +1,18 @@
 import React, { useContext, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import loadingGIF from "../assets/loading.gif"
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const { setUser } = useContext(UserContext);
-
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const LoginUser = async (ev) => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
+    setLoading(true)
     ev.preventDefault();
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -24,9 +27,13 @@ const LoginPage = () => {
         localStorage.setItem("token", json.authtoken);
         localStorage.setItem("userData", json.user);
         alert("Login Successfull");
+        setLoading(false)
         setRedirect(true);
         setUser(json.user);
       } else {
+        setLoading(false)
+
+        navigate("/login")
         alert("Invalid Credentials");
       }
     } catch (error) {
@@ -38,6 +45,17 @@ const LoginPage = () => {
     return <Navigate to={"/"} />;
   }
   return (
+    <>
+    {loading ? (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <img
+    className=""
+      style={{ width: "30%" }}
+      src={loadingGIF}
+      alt="Loading..."
+    /><div>Please Wait</div>
+  </div>
+) : (
     <div className="grow flex items-center justify-center h-screen">
       <div className="mb-32">
         <h1 className="sm:text-3xl text-xl text-center mb-4">
@@ -71,6 +89,9 @@ const LoginPage = () => {
         </form>
       </div>
     </div>
+)}
+    </>
+    
   );
 };
 
