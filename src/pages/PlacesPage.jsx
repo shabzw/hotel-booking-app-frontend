@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import AccountNav from "./AccountNav";
 
-import { UserContext } from "../UserContext";
+// import { UserContext } from "../UserContext";
 import PlaceImg from "./PlaceImg";
 
 const PlacesPage = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-  const { user } = useContext(UserContext);
+  const navigate = useNavigate()
+  // const { user } = useContext(UserContext);
 
   const [places, setPlaces] = useState([]);
-  if (!user) {
-    return <Navigate to={"/login"} />;
-  }
+  // if (!user) {
+  //   return <Navigate to={"/login"} />;
+  // }
 
   useEffect(() => {
+    if(localStorage.getItem("token")){
     fetch(`${API_BASE_URL}/api/account/user-places`, {
       method: "GET",
       headers: {
@@ -35,6 +36,9 @@ const PlacesPage = () => {
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
       });
+    }else{
+      navigate("/login")
+    }
   }, []);
 
   return (

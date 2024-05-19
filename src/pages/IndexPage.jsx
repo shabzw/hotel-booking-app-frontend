@@ -4,16 +4,16 @@ import { UserContext } from "../UserContext";
 
 const IndexPage = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
   const navigate = useNavigate()
   const [places, setPlaces] = useState([]);
   useEffect(() => {
-    if(user){
+    if(localStorage.getItem("token")){
       fetch(`${API_BASE_URL}/api/account/places`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          // "auth-token": localStorage.getItem("token")
+          "auth-token": localStorage.getItem("token")
         },
       })
         .then((response) => {
@@ -27,6 +27,7 @@ const IndexPage = () => {
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
+          // navigate("/login")
         });
     }else{
       navigate("/login")

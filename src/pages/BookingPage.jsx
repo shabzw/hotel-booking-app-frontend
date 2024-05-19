@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { UserContext } from "../UserContext";
+import { useNavigate, useParams } from "react-router-dom";
+// import { UserContext } from "../UserContext";
 import PlacesGallery from "./PlacesGallery";
 import AddressLink from "./AddressLink";
 import BookingDates from "./BookingDates";
@@ -8,16 +8,17 @@ import BookingPrice from "./BookingPrice";
 import { Navigate } from "react-router-dom";
 
 const BookingPage = () => {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const { user } = useContext(UserContext);
-  if (!user) {
-    return <Navigate to={"/login"} />;
-  }
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate()
+  // const { user } = useContext(UserContext);
+  // if (!user) {
+  //   return <Navigate to={"/login"} />;
+  // }
   const { id } = useParams();
   const [booking, setBooking] = useState(null);
   useEffect(() => {
-    if (id) {
+    if (localStorage.getItem("token")) {
       fetch(`${API_BASE_URL}/api/account/bookings`, {
         method: "GET",
         headers: {
@@ -40,6 +41,8 @@ const BookingPage = () => {
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
         });
+    }else{
+      navigate("/login")
     }
   }, [id]);
 

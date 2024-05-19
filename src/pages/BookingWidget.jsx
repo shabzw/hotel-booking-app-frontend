@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 const BookingWidget = ({ place }) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -13,6 +13,7 @@ const BookingWidget = ({ place }) => {
   const [phone, setPhone] = useState("");
   const [redirect, setRedirect] = useState("");
   const { user } = useContext(UserContext);
+  const navigate = useNavigate()
   let dateDifference = differenceInCalendarDays(
     new Date(checkOut),
     new Date(checkIn)
@@ -26,6 +27,9 @@ const BookingWidget = ({ place }) => {
   }, [user]);
 
   const bookThisPlace = async (ev) => {
+    if(localStorage.getItem("token")){
+
+    
     fetch(`${API_BASE_URL}/api/account/bookings`, {
       method: "POST",
       headers: {
@@ -57,6 +61,9 @@ const BookingWidget = ({ place }) => {
       .catch((error) => {
         console.error("There was a problem with the Post operation:", error);
       });
+    }else{
+      navigate("/login")
+    }
   };
 
   if (redirect) {

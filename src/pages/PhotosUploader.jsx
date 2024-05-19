@@ -1,14 +1,17 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 const PhotosUploader = (props) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [photoLink, setPhotoLink] = useState("");
-
+  const navigate = useNavigate()
   // Uploading files in local "uploads" folder inside "api" directory
   async function addPhotoByLink(ev) {
     ev.preventDefault();
+    if(localStorage.getItem("token")){
+
     fetch(`${API_BASE_URL}/api/account/upload-from-url`, {
       method: "POST",
       headers: {
@@ -33,6 +36,9 @@ const PhotosUploader = (props) => {
       .catch((error) => {
         console.error("There was a problem with the upload operation:", error);
       });
+    }else{
+      navigate("/login")
+    }
   }
   // ==================================================
   function uploadPhoto(ev) {
