@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../UserContext";
 
 const IndexPage = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  // const { user } = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [places, setPlaces] = useState([]);
+
   useEffect(() => {
-    if(localStorage.getItem("token")){
+    if (localStorage.getItem("token")) {
       fetch(`${API_BASE_URL}/api/account/places`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token")
+          "auth-token": localStorage.getItem("token"),
         },
       })
         .then((response) => {
@@ -27,13 +26,12 @@ const IndexPage = () => {
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
-          // navigate("/login")
         });
-    }else{
-      navigate("/login")
+    } else {
+      navigate("/login");
     }
-    
   }, []);
+
   return (
     // Home page that displays all accomodations
     <div className="mt-8 gap-6 gap-y-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

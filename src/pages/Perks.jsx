@@ -1,11 +1,14 @@
 import React from "react";
 
 const Perks = ({ selected, onChange }) => {
+
   function handleCbClick(ev) {
     const { checked, name } = ev.target;
     if (checked) {
+      //if the checkbox is checked, add the name of the perk into the array 
       onChange([...selected, name]);
     } else {
+      //if the checkbox is unchecked, remove the name of the perk from the array 
       onChange([...selected.filter((selectedName) => selectedName !== name)]);
     }
   }

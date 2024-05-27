@@ -1,24 +1,20 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import { UserContext } from "../UserContext";
 import PlacesGallery from "./PlacesGallery";
 import AddressLink from "./AddressLink";
 import BookingDates from "./BookingDates";
 import BookingPrice from "./BookingPrice";
-import { Navigate } from "react-router-dom";
 
 const BookingPage = () => {
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate()
-  // const { user } = useContext(UserContext);
-  // if (!user) {
-  //   return <Navigate to={"/login"} />;
-  // }
   const { id } = useParams();
   const [booking, setBooking] = useState(null);
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
+      // API call for fetching booking details
       fetch(`${API_BASE_URL}/api/account/bookings`, {
         method: "GET",
         headers: {

@@ -80,6 +80,7 @@ const PlacesGallery = ({ place }) => {
           </div>
         </div>
         <button
+        //This button will display all photos associated with the place when clicked
           onClick={() => setshowAllPhotos(true)}
           className="flex gap-1 absolute bottom-2 right-2 py-2 px-2 rounded-2xl bg-white shadow-md shadow-gray-500"
         >

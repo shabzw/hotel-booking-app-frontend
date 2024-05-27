@@ -13,7 +13,9 @@ const BookingWidget = ({ place }) => {
   const [phone, setPhone] = useState("");
   const [redirect, setRedirect] = useState("");
   const { user } = useContext(UserContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  //Calculate difference between chekin and checkout days
   let dateDifference = differenceInCalendarDays(
     new Date(checkOut),
     new Date(checkIn)
@@ -27,42 +29,41 @@ const BookingWidget = ({ place }) => {
   }, [user]);
 
   const bookThisPlace = async (ev) => {
-    if(localStorage.getItem("token")){
-
-    
-    fetch(`${API_BASE_URL}/api/account/bookings`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        place: place._id,
-        checkIn,
-        checkOut,
-        numberOfGuests,
-        name,
-        phone,
-        price: place.price * dateDifference * numberOfGuests,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json(); // Parse the JSON from the response
+    if (localStorage.getItem("token")) {
+      //API call to add booking data
+      fetch(`${API_BASE_URL}/api/account/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          place: place._id,
+          checkIn,
+          checkOut,
+          numberOfGuests,
+          name,
+          phone,
+          price: place.price * dateDifference * numberOfGuests,
+        }),
       })
-      .then((data) => {
-        alert("Booking Successfull");
-        const bookingId = data._id;
-        setRedirect(true);
-        setRedirect(`/account/bookings/${bookingId}`);
-      })
-      .catch((error) => {
-        console.error("There was a problem with the Post operation:", error);
-      });
-    }else{
-      navigate("/login")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json(); // Parse the JSON from the response
+        })
+        .then((data) => {
+          alert("Booking Successfull");
+          const bookingId = data._id;
+          setRedirect(true);
+          setRedirect(`/account/bookings/${bookingId}`);
+        })
+        .catch((error) => {
+          console.error("There was a problem with the Post operation:", error);
+        });
+    } else {
+      navigate("/login");
     }
   };
 

@@ -3,6 +3,7 @@ import { UserContext } from "../UserContext";
 import PlacesPage from "./PlacesPage";
 import { Navigate, useParams } from "react-router-dom";
 import AccountNav from "./AccountNav";
+
 const ProfilePage = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -34,6 +35,7 @@ const ProfilePage = () => {
       .then((data) => {
         alert("You are now logged out from this website");
         setUser(null);
+        //remove data stored in localStorage on logout
         localStorage.removeItem("token");
         localStorage.removeItem("userData");
         setRedirect("/login");

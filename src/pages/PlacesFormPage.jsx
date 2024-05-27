@@ -23,11 +23,13 @@ const PlacesFormPage = () => {
   const [maxGuests, setMaxGuests] = useState("1");
   const [price, setPrice] = useState(100);
   const [redirect, setRedirect] = useState(false);
+
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     if (!id) {
       return;
     }
-
     fetch(`${API_BASE_URL}/api/account/places/${id}`, {
       method: "GET",
       headers: {
@@ -58,7 +60,7 @@ const PlacesFormPage = () => {
       });
   }, [id]);
 
-  const { user } = useContext(UserContext);
+  
   if (!user) {
     return <Navigate to={"/login"} />;
   }
@@ -82,6 +84,7 @@ const PlacesFormPage = () => {
     ev.preventDefault();
 
     if (id) {
+      //API to update details of a place
       fetch(`${API_BASE_URL}/api/account/places`, {
         method: "PUT",
         headers: {
@@ -115,6 +118,7 @@ const PlacesFormPage = () => {
           console.error("There was a problem with the fetch operation:", error);
         });
     } else {
+      //API call to add details of a place
       fetch(`${API_BASE_URL}/api/account/places`, {
         method: "POST",
         headers: {
@@ -155,6 +159,7 @@ const PlacesFormPage = () => {
   return (
     <div>
       <AccountNav />
+      {/* Form to add details of place */}
       <form onSubmit={savePlace}>
         {preInput(
           "Title",

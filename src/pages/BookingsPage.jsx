@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import AccountNav from "./AccountNav";
 import { useEffect } from "react";
-// import { UserContext } from "../UserContext";
 import PlaceImg from "./PlaceImg";
 import { Link, useNavigate } from "react-router-dom";
 import BookingDates from "./BookingDates";
@@ -9,40 +8,38 @@ import BookingPrice from "./BookingPrice";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const BookingsPage = () => {
-  const navigate = useNavigate()
-  // const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
-  // if (!user) {
-  //   return <Navigate to={"/login"} />;
-  // }
+
   useEffect(() => {
-    if(localStorage.getItem("token")){
-    fetch(`${API_BASE_URL}/api/account/bookings`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json(); // Parse the JSON from the response
+    if (localStorage.getItem("token")) {
+      fetch(`${API_BASE_URL}/api/account/bookings`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
       })
-      .then((data) => {
-        setBookings(data); // Assuming `setBookings` is a state setter function
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
-    }else{
-      navigate("/login")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json(); // Parse the JSON from the response
+        })
+        .then((data) => {
+          setBookings(data); // Assuming `setBookings` is a state setter function
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+        });
+    } else {
+      navigate("/login");
     }
   }, []);
 
   return (
     <div>
+      {/*Using AccountNav to Display menu bar on top */}
       <AccountNav />
       <div className="mt-6">
         {bookings?.length > 0 &&

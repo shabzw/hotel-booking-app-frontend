@@ -4,6 +4,7 @@ import { UserContext } from "../UserContext";
 
 const Header = () => {
   const { user } = useContext(UserContext);
+
   return (
     <div>
       <header className="flex items-center justify-between">
@@ -81,6 +82,7 @@ const Header = () => {
               />
             </svg>
           </Link>
+          {/* Display name of the user */}
           {!!user && <div>{JSON.parse(user).name}</div>}
         </div>
       </header>

@@ -6,42 +6,46 @@ const PhotosUploader = (props) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const [photoLink, setPhotoLink] = useState("");
-  const navigate = useNavigate()
-  // Uploading files in local "uploads" folder inside "api" directory
+  const navigate = useNavigate();
+
   async function addPhotoByLink(ev) {
     ev.preventDefault();
-    if(localStorage.getItem("token")){
-
-    fetch(`${API_BASE_URL}/api/account/upload-from-url`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ link: photoLink }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json(); // Parse the JSON from the response
+    
+    if (localStorage.getItem("token")) {
+      fetch(`${API_BASE_URL}/api/account/upload-from-url`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ link: photoLink }),
       })
-      .then((data) => {
-        const filename = data.imageUrl;
-        props.setAddedPhotos((prev) => {
-          return [...prev, filename];
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json(); // Parse the JSON from the response
+        })
+        .then((data) => {
+          const filename = data.imageUrl;
+          props.setAddedPhotos((prev) => {
+            return [...prev, filename];
+          });
+          setPhotoLink("");
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with the upload operation:",
+            error
+          );
         });
-        setPhotoLink("");
-      })
-      .catch((error) => {
-        console.error("There was a problem with the upload operation:", error);
-      });
-    }else{
-      navigate("/login")
+    } else {
+      navigate("/login");
     }
   }
   // ==================================================
   function uploadPhoto(ev) {
+    //creat new formdata to store details of images
     const files = ev.target.files;
     const data = new FormData();
     for (let i = 0; i < files.length; i++) {
