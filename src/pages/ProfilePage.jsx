@@ -33,7 +33,6 @@ const ProfilePage = () => {
         return response.json(); // Parse the JSON from the response
       })
       .then((data) => {
-        alert("You are now logged out from this website");
         setUser(null);
         //remove data stored in localStorage on logout
         localStorage.removeItem("token");

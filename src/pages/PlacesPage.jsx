@@ -69,14 +69,14 @@ const PlacesPage = () => {
               className="sm:text-left sm:flex cursor-pointer sm:bg-gray-200 m-3 p-4 rounded-2xl gap-2"
               key={place._id}
             >
-              <div className="w-40 bg-gray-300 shrink-0">
+              <div className="max-h-40 max-w-40 rounded-md">
                 <PlaceImg place={place} />
               </div>
               <div className="grow-0 shrink overflow-hidden">
-                <h2 className="text-xl bg-gray-300 my-2 rounded-lg">
+                <h2 className="text-xl m-2 rounded-lg">
                   {place.title}
                 </h2>
-                <p className="text-sm mt-2 border-b">{place.description}</p>
+                <p className="text-sm m-2 border-b">{place.description}</p>
               </div>
             </Link>
           ))}

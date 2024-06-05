@@ -28,7 +28,6 @@ const LoginPage = () => {
       if (json.success) {
         localStorage.setItem("token", json.authtoken);
         localStorage.setItem("userData", json.user);
-        alert("Login Successfull");
         setLoading(false);
         setRedirect(true);
         setUser(json.user);

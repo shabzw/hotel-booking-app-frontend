@@ -46,14 +46,14 @@ const BookingsPage = () => {
           bookings.map((booking) => (
             <Link
               to={`/account/bookings/${booking._id}`}
-              className="flex items-center gap-4 bg-gray-200 my-4 rounded-xl overflow-hidden"
+              className="flex items-center gap-7 mb-5 bg-gray-200 my-4 rounded-xl overflow-hidden"
               key={booking._id}
             >
-              <div className="w-56 p-2">
+              <div className="max-h-40 max-w-40 p-2 rounded-md">
                 <PlaceImg place={booking.place} />
               </div>
-              <div className="py-3 grow pr-3">
-                <h2 className="text-md sm:text-xl font-semibold border-b mb-2 border-gray-300">
+              <div className="py-3 grow">
+                <h2 className="text-md sm:text-xl font-semibold  mb-2 ">
                   {booking.place.title}
                 </h2>
                 <BookingDates booking={booking} />
