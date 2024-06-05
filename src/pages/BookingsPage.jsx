@@ -52,7 +52,7 @@ const BookingsPage = () => {
               <div className="max-h-40 max-w-40 p-2 rounded-md">
                 <PlaceImg place={booking.place} />
               </div>
-              <div className="py-3 grow">
+              <div className="py-3 pr-2 grow">
                 <h2 className="text-md sm:text-xl font-semibold  mb-2 ">
                   {booking.place.title}
                 </h2>
